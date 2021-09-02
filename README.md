@@ -1,2 +1,2 @@
 # RestSalesforce
-Metods show hou to work with HTTP in salesforce.
+Metods show how to work with HTTP in salesforce.
