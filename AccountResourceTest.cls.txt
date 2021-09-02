@@ -1,0 +1,117 @@
+@isTest
+public with sharing class AccountResourceTest {
+   
+	 
+    // Testing the GET request
+    @isTest
+    static void doGetTest() {
+        Test.startTest();
+        Account accountTest = new Account(Name='Richard', Phone='1234',Website='www.test.com');
+         insert accountTest;
+        // Forming the request
+        RestRequest accountRequest = new RestRequest();
+        accountRequest.requestUri = 'https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+accountTest.Id;
+        accountRequest.httpMethod = 'GET';
+        RestContext.request = accountRequest;
+        // Testing the API
+        Account returnedAccount = MyRestResource.doGet();
+        // Confirming the response
+        System.assert(returnedAccount != null);
+        System.assertEquals('Richard', returnedAccount.Name);
+        System.assertEquals('1234', returnedAccount.Phone);
+        System.assertEquals('www.test.com', returnedAccount.Website);
+        Test.stopTest();
+    }
+    
+     // Testing the POST request
+    @isTest
+    static void doPostTest() {
+        Test.startTest();
+        // Testing the API
+        String returnedAccountId = MyRestResource.doPost('Richard', '1234', 'www.test.com');
+        System.assert(returnedAccountId != null);
+         
+        // Querying the newly created contact
+        Account queriedAccount = [SELECT Name, Phone, Website FROM Account WHERE Id = :returnedAccountId];
+        // Confirming the response
+        System.assert(queriedAccount != null);
+        System.assertEquals('Richard', queriedAccount.Name);
+        System.assertEquals('1234', queriedAccount.Phone);
+        System.assertEquals('www.test.com', queriedAccount.Website);
+        Test.stopTest();
+    }
+    
+    // Testing the DELETE request
+    @isTest
+    static void doDeleteTest() {
+        Test.startTest();
+        Account accountTest = new Account(Name='Richard', Phone='1234',Website='www.test.com');
+        insert accountTest;
+        // Querying the contact to delete
+        List<Account> accountToDelete = [SELECT Id FROM Account WHERE Id = :accountTest.Id ];
+        
+        // Forming the request
+        RestRequest accountRequest = new RestRequest();
+        accountRequest.requestUri = 'https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/' + accountToDelete.get(0).Id;
+        accountRequest.httpMethod = 'DELETE';
+        RestContext.request = accountRequest;
+        // Testing the API
+        MyRestResource.doDelete();
+        // Confirming the response
+        Account queriedAccount = [SELECT Id, IsDeleted FROM Account WHERE Id =:accountToDelete.get(0).Id ALL ROWS];
+		System.assert(queriedAccount != null);        
+        System.assert(queriedAccount.IsDeleted);
+        Test.stopTest();
+    }
+    // Testing the UPSERT request
+    @isTest
+    static void doPutTest() {
+        Test.startTest();
+        Account accountTest = new Account(Name='Richard', Phone='1234',Website='www.test.com');
+        insert accountTest;
+  
+        Account accountToUpsert = [SELECT Id FROM Account LIMIT 1];
+        
+        // Forming the request
+        RestRequest accountRequest = new RestRequest();
+        accountRequest.requestUri = 'https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/' + accountToUpsert.Id;
+        accountRequest.httpMethod = 'PUT';
+        RestContext.request = accountRequest;
+        // Testing the API
+        String returnedAccountId = MyRestResource.doPut('Gavin', '5678', 'www.Newtest.com');
+        // Confirming the response
+        Account queriedAccount = [SELECT Name, Phone, Website FROM Account WHERE Id = :returnedAccountId];
+        System.assertEquals('Gavin', queriedAccount.Name);
+        System.assertEquals('5678', queriedAccount.Phone);
+        System.assertEquals('www.Newtest.com', queriedAccount.Website);
+        Test.stopTest();
+    }
+    
+     // Testing the UPDATE request
+    @isTest
+    static void doPatchTest() {
+        Test.startTest();
+        Account accountTest = new Account(Name='Richard', Phone='1234',Website='www.test.com');
+        insert accountTest;
+         
+        List<Account>   accoutnToUpdate = [SELECT Id FROM Account LIMIT 1];
+        
+        // Forming the request
+        RestRequest accountRequest = new RestRequest();
+        accountRequest.requestUri = 'https://ap5.salesforce.com/services/apexrest/ContactAPI/' + accoutnToUpdate.get(0).Id;
+        accountRequest.httpMethod = 'PATCH';
+        RestContext.request = accountRequest;
+        // Testing the API
+        String returnedAccountId = MyRestResource.doPatch('Gavin',null,null);
+        // Confirming the response
+        Account queriedAccount =  [SELECT Name, Phone, Website FROM Account WHERE Id = :returnedAccountId];
+        
+        System.assertEquals('Gavin', queriedAccount.Name);
+        System.assertEquals('1234', queriedAccount.Phone);
+        System.assertEquals('www.test.com', queriedAccount.Website);
+       
+        Test.stopTest();
+    }
+
+    
+}

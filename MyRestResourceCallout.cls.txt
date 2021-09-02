@@ -1,0 +1,86 @@
+public class MyRestResourceCallout {
+    public static HttpResponse makeGetCallout(String id) {
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+id);
+        request.setMethod('GET');
+        HttpResponse response = http.send(request);
+        // Parse the JSON response
+        if(response.getStatusCode() != 201) {
+            System.debug('The status code returned was not expected: ' +
+                response.getStatusCode() + ' ' + response.getStatus());
+        } else {
+            System.debug(response.getBody());
+        }
+        return response;
+    }
+    
+    public static HttpResponse makePostCallout() {
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/');
+        request.setMethod('POST');
+        request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        request.setBody('{"name":"RichardTest","phone":"789","website":"www.com." }');
+        HttpResponse response = http.send(request);
+        // Parse the JSON response
+        if(response.getStatusCode() != 201) {
+            System.debug('The status code returned was not expected: ' +
+                response.getStatusCode() + ' ' + response.getStatus());
+        } else {
+            System.debug(response.getBody());
+        }
+        return response;
+    }
+     public static HttpResponse makeDeleteCallout(String id) {
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+id);
+        request.setMethod('DELETE');
+        request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        HttpResponse response = http.send(request);
+        // Parse the JSON response
+        if(response.getStatusCode() != 201) {
+            System.debug('The status code returned was not expected: ' +
+                response.getStatusCode() + ' ' + response.getStatus());
+        } else {
+            System.debug(response.getBody());
+        }
+        return response;
+    }
+    public static HttpResponse makePutCallout(String id) {
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+id);
+        request.setMethod('PUT');
+        request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        request.setBody('{"name":"RichardTestPut","phone":"","website":"" }');
+        HttpResponse response = http.send(request);
+        // Parse the JSON response
+        if(response.getStatusCode() != 200) {
+            System.debug('The status code returned was not expected: ' +
+                response.getStatusCode() + ' ' + response.getStatus());
+        } else {
+            System.debug(response.getBody());
+        }
+        return response;
+    }
+    public static HttpResponse makePathCallout(String id) {
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+id);
+        request.setMethod('PATCH');
+        request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        request.setBody('{"name":"Gevin","phone":"","website":"" }');
+        HttpResponse response = http.send(request);
+        // Parse the JSON response
+        if(response.getStatusCode() != 200) {
+            System.debug('The status code returned was not expected: ' +
+                response.getStatusCode() + ' ' + response.getStatus());
+        } else {
+            System.debug(response.getBody());
+        }
+        return response;
+    }
+    
+}
