@@ -2,7 +2,7 @@ public class MyRestResourceCallout {
     public static HttpResponse makeGetCallout(String id) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+id);
+        request.setEndpoint('callout:My_Named_Credential/services/apexrest/Account/'+id);
         request.setMethod('GET');
         HttpResponse response = http.send(request);
         // Parse the JSON response
@@ -18,7 +18,7 @@ public class MyRestResourceCallout {
     public static HttpResponse makePostCallout() {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/');
+        request.setEndpoint('callout:My_Named_Credential/services/apexrest/Account/');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setBody('{"name":"RichardTest","phone":"789","website":"www.com." }');
@@ -35,7 +35,7 @@ public class MyRestResourceCallout {
      public static HttpResponse makeDeleteCallout(String id) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+id);
+        request.setEndpoint('callout:My_Named_Credential/services/apexrest/Account/'+id);
         request.setMethod('DELETE');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         HttpResponse response = http.send(request);
@@ -51,7 +51,7 @@ public class MyRestResourceCallout {
     public static HttpResponse makePutCallout(String id) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+id);
+        request.setEndpoint('callout:My_Named_Credential/services/apexrest/Account/'+id);
         request.setMethod('PUT');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setBody('{"name":"RichardTestPut","phone":"","website":"" }');
@@ -68,7 +68,7 @@ public class MyRestResourceCallout {
     public static HttpResponse makePathCallout(String id) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://mindful-fox-2yzs7j-dev-ed.lightning.force.com/services/apexrest/Account/'+id);
+        request.setEndpoint('callout:My_Named_Credential/services/apexrest/Account/'+id);
         request.setMethod('PATCH');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setBody('{"name":"Gevin","phone":"","website":"" }');
